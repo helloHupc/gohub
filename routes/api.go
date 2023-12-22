@@ -2,10 +2,8 @@
 package routes
 
 import (
-	"gohub/app/http/controllers/api/v1/auth"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"gohub/app/http/controllers/api/v1/auth"
 )
 
 // 注册项目相关路由
@@ -14,13 +12,6 @@ func RegisterAPIRoutes(r *gin.Engine) {
 
 	v1 := r.Group("/v1")
 	{
-		// 注册一个路由
-		v1.GET("/", func(c *gin.Context) {
-			// 以json格式响应
-			c.JSON(http.StatusOK, gin.H{
-				"hello": "world!",
-			})
-		})
 
 		authGroup := v1.Group("/auth")
 		{
