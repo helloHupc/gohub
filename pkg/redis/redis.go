@@ -3,6 +3,7 @@ package redis
 
 import (
 	"context"
+	"fmt"
 	"github.com/go-redis/redis/v8"
 	"gohub/pkg/logger"
 	"sync"
@@ -23,6 +24,10 @@ var Redis *RedisClient
 
 // ConnectRedis 连接 redis 数据库，设置全局的 Redis 对象
 func ConnectRedis(address string, username string, password string, db int) {
+	fmt.Println("***********address:", address)
+	fmt.Println("***********username:", username)
+	fmt.Println("***********password:", password)
+	fmt.Println("***********db:", db)
 	once.Do(func() {
 		Redis = NewClient(address, username, password, db)
 	})
