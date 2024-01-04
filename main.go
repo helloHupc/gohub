@@ -15,7 +15,6 @@ func init() {
 }
 
 func main() {
-	fmt.Println("Hello World!")
 
 	// 配置初始化，依赖命令行 --env 参数
 	var env string
