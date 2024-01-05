@@ -3,6 +3,7 @@ package auth
 import (
 	"github.com/gin-gonic/gin"
 	v1 "gohub/app/http/controllers/api/v1"
+	"gohub/app/requests"
 	"gohub/pkg/captcha"
 	"gohub/pkg/logger"
 	"gohub/pkg/response"
@@ -25,4 +26,15 @@ func (vc *VerifyCodeController) ShowCaptcha(c *gin.Context) {
 		"captcha_image":  b64s,
 		"captcha_answer": answer,
 	})
+}
+
+// SendUsingPhone 发送手机验证码
+func (vc *VerifyCodeController) SendUsingPhone(c *gin.Context) {
+	// 1. 验证表单
+	request := requests.VerifyCodePhoneRequest{}
+	if ok := requests.Validate(c, &request, requests.VerifyCodePhone); !ok {
+		response.Abort500(c, "短信发送失败~")
+	} else {
+		response.Success(c)
+	}
 }

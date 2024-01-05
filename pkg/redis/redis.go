@@ -26,7 +26,6 @@ var Redis *RedisClient
 func ConnectRedis(address string, username string, password string, db int) {
 	fmt.Println("***********address:", address)
 	fmt.Println("***********username:", username)
-	fmt.Println("***********password:", password)
 	fmt.Println("***********db:", db)
 	once.Do(func() {
 		Redis = NewClient(address, username, password, db)
