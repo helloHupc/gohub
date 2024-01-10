@@ -38,7 +38,8 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			authGroup.POST("/login/refresh-token", lgc.RefreshToken)
 
 			pwc := new(auth.PasswordController)
-			authGroup.POST("/password-reset/using-phone", pwc.RestByPhone)
+			authGroup.POST("/password-reset/using-phone", pwc.ResetByPhone)
+			authGroup.POST("/password-reset/using-email", pwc.ResetByEmail)
 		}
 	}
 }
