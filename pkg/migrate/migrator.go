@@ -91,6 +91,27 @@ func (migrator *Migrator) Rollback() {
 	}
 }
 
+// Reset 回滚所有迁移
+func (migrator *Migrator) Reset() {
+	migrations := []Migration{}
+	// 按照顺序读取所有迁移文件
+	migrator.DB.Order("id DESC").Find(&migrations)
+
+	// 回滚所有迁移
+	if !migrator.rollbackMigrations(migrations) {
+		console.Success("[migrations] table is empty, noting to reset.")
+	}
+}
+
+// Refresh 回滚所有迁移，并运行所有迁移
+func (migrator *Migrator) Refresh() {
+	// 回滚所有迁移
+	migrator.Reset()
+
+	// 再次执行所有迁移
+	migrator.Up()
+}
+
 // 回退迁移，按照顺序执行迁移的down方法
 func (migrator *Migrator) rollbackMigrations(migrations []Migration) bool {
 	// 标记是否真的有执行了迁移回退的操作
@@ -161,12 +182,12 @@ func (migrator *Migrator) runUpMigration(mfile MigrationFile, batch int) {
 	// 执行 up 区块的 SQL
 	if mfile.Up != nil {
 		// 友好提示
-		console.Warning("migrating" + mfile.FileName)
+		console.Warning("migrating " + mfile.FileName)
 
 		// 执行up方法
 		mfile.Up(database.DB.Migrator(), database.SQLDB)
 		// 提示已经迁移了哪个文件
-		console.Success("migrated" + mfile.FileName)
+		console.Success("migrated " + mfile.FileName)
 	}
 
 	// 入库
