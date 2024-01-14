@@ -26,3 +26,9 @@ func (ctrl *UsersController) Show(c *gin.Context) {
 	}
 	response.Data(c, userModel)
 }
+
+// Index 所有用户
+func (ctrl *UsersController) Index(c *gin.Context) {
+	data := user.All()
+	response.Data(c, data)
+}
