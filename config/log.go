@@ -20,7 +20,7 @@ func init() {
 			// 日志的类型，可选：
 			// "single" 独立的文件
 			// "daily" 按照日期每日一个
-			"type": config.Env("LOG_TYPE", "daily"),
+			"type": config.Env("LOG_TYPE", "single"),
 
 			/* ------------------ 滚动日志配置 ------------------ */
 			// 日志文件路径
