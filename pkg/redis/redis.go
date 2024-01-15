@@ -99,6 +99,15 @@ func (rds RedisClient) Del(keys ...string) bool {
 	return true
 }
 
+// FlushDB 清空当前 redis db 里的所有数据
+func (rds RedisClient) FlushDB() bool {
+	if err := rds.Client.FlushDB(rds.Context).Err(); err != nil {
+		logger.ErrorString("Redis", "FlushDB", err.Error())
+		return false
+	}
+	return true
+}
+
 // Increment 当参数只有 1 个时，为 key，其值增加 1。
 // 当参数有 2 个时，第一个参数为 key ，第二个参数为要增加的值 int64 类型。
 func (rds RedisClient) Increment(parameters ...interface{}) bool {
