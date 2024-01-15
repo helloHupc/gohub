@@ -23,6 +23,12 @@ func InitWithCacheStore(store Store) {
 	})
 }
 
+func Set(key string, obj interface{}, expireTime time.Duration) {
+	b, err := json.Marshal(&obj)
+	logger.LogIf(err)
+	Cache.Store.Set(key, string(b), expireTime)
+}
+
 func Get(key string) interface{} {
 	stringValue := Cache.Store.Get(key)
 	var wanted interface{}
