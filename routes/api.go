@@ -6,13 +6,20 @@ import (
 	controllers "gohub/app/http/controllers/api/v1"
 	"gohub/app/http/controllers/api/v1/auth"
 	"gohub/app/http/middlewares"
+	"gohub/pkg/config"
 )
 
 // 注册项目相关路由
 func RegisterAPIRoutes(r *gin.Engine) {
 	// 测试一个v1路由组
 
-	v1 := r.Group("/v1")
+	var v1 *gin.RouterGroup
+	if len(config.Get("app.api_domain")) == 0 {
+		v1 = r.Group("/api/v1")
+	} else {
+		v1 = r.Group("/v1")
+	}
+
 	v1.Use(middlewares.LimitIP("200-H"))
 	{
 		authGroup := v1.Group("/auth")
