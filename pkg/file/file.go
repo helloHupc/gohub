@@ -63,7 +63,7 @@ func SaveUploadAvatar(c *gin.Context, file *multipart.FileHeader) (string, error
 	}
 
 	// 删除老文件
-	err = os.RemoveAll(avatarPath)
+	err = os.Remove(avatarPath)
 	if err != nil {
 		return avatar, err
 	}
